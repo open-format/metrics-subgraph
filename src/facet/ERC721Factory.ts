@@ -14,7 +14,7 @@ export function handleCreated(event: Created): void {
     ERC721Base.createWithContext(event.params.id, ERC721Context);
   }
 
-  let transaction = loadOrCreateTransaction(event, "Create ERC721");
+  let transaction = loadOrCreateTransaction(event, "Create Badge");
   transaction.save();
 
   let stats = loadOrCreateStats();
