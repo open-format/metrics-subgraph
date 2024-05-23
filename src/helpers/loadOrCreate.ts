@@ -40,18 +40,14 @@ export function loadOrCreateUser(
 
     if (_User.id != ZERO_ADDRESS) {
       let stats = loadOrCreateStats();
-      /*
       log.debug("*** loadOrCreateUser doesn't exist: id: {}, uniqueUser: {}", [
         id,
         stats.uniqueUsers.toString(),
       ]);
-      */
       stats.uniqueUsers = stats.uniqueUsers.plus(One);
-      /*
       log.debug("*** loadOrCreateUser New Unique Users: uniqueUsers: {}", [
         stats.uniqueUsers.toString(),
       ]);
-      */
       stats.save();
     }
   }

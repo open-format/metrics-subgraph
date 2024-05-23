@@ -1,4 +1,4 @@
-import {Address, dataSource, log} from "@graphprotocol/graph-ts";
+import {Address, dataSource} from "@graphprotocol/graph-ts";
 import {
   ERC20Base as ERC20BaseContract,
   Transfer,
@@ -24,9 +24,6 @@ export function handleTransfer(event: Transfer): void {
     ? "ERC20 Burn"
     : "ERC20 Transfer";
 
-  //let transaction = loadOrCreateTransaction(event, type);
-  //log.debug("*** Transaction ERC20Base: {}", [type]);
-
   if (type === "ERC20 Mint") {
     stats.TokensMintedTransactions = stats.TokensMintedTransactions.plus(One);
   } else {
@@ -34,5 +31,4 @@ export function handleTransfer(event: Transfer): void {
       stats.TokensTransferredTransactions.plus(One);
   }
   stats.save();
-  //transaction.save();
 }

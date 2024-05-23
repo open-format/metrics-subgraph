@@ -1,4 +1,4 @@
-import {DataSourceContext, log} from "@graphprotocol/graph-ts";
+import {DataSourceContext} from "@graphprotocol/graph-ts";
 import {Created} from "../generated/AppFactory/AppFactory";
 import {
   ERC20FactoryFacet,
@@ -16,7 +16,6 @@ export function handleCreated(event: Created): void {
 
   let transaction = loadOrCreateTransaction(event, "Create dApp");
   transaction.save();
-  //log.debug("*** Transaction AppFactory: Create dApp", []);
 
   let stats = loadOrCreateStats();
   stats.appCount = stats.appCount.plus(One);
