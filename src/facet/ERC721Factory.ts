@@ -16,7 +16,7 @@ export function handleCreated(event: Created): void {
 
   let transaction = loadOrCreateTransaction(event, "Create Badge");
   transaction.save();
-  log.debug("*** Transaction ERC721Factory: Create ERC721", []);
+  //log.debug("*** Transaction ERC721Factory: Create ERC721", []);
 
   let stats = loadOrCreateStats();
   stats.ERC721Count = stats.ERC721Count.plus(One);

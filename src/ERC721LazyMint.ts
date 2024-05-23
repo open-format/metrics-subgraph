@@ -16,7 +16,7 @@ import {
 export function handleMinted(event: Minted): void {
   let transaction = loadOrCreateTransaction(event, "ERC721Drop Mint");
   transaction.save();
-  log.debug("*** Transaction ERC721LazyMint: ERC721Drop Mint", []);
+  //log.debug("*** Transaction ERC721LazyMint: ERC721Drop Mint", []);
 
   let stats = loadOrCreateStats();
   stats.BadgesMintedTransactions = stats.BadgesMintedTransactions.plus(One);
@@ -26,7 +26,7 @@ export function handleMinted(event: Minted): void {
 export function handleBatchMinted(event: BatchMinted): void {
   let transaction = loadOrCreateTransaction(event, "ERC721Drop Batch Mint");
   transaction.save();
-  log.debug("*** Transaction ERC721LazyMint: ERC721Drop Batch Mint", []);
+  //log.debug("*** Transaction ERC721LazyMint: ERC721Drop Batch Mint", []);
 
   let stats = loadOrCreateStats();
   stats.BadgesMintedTransactions = stats.BadgesMintedTransactions.plus(One);
@@ -36,7 +36,7 @@ export function handleBatchMinted(event: BatchMinted): void {
 export function handleLazyMint(event: TokensLazyMinted): void {
   let transaction = loadOrCreateTransaction(event, "ERC721Drop Lazy Mint");
   transaction.save();
-  log.debug("*** Transaction ERC721LazyMint: ERC721Drop Lazy Mint", []);
+  //log.debug("*** Transaction ERC721LazyMint: ERC721Drop Lazy Mint", []);
 }
 
 export function handleTransfer(event: Transfer): void {
@@ -45,7 +45,7 @@ export function handleTransfer(event: Transfer): void {
 
   let transaction = loadOrCreateTransaction(event, type);
   transaction.save();
-  log.debug("*** Transaction ERC721LazyMint: {}", [type]);
+  //log.debug("*** Transaction ERC721LazyMint: {}", [type]);
 
   let stats = loadOrCreateStats();
   stats.BadgesTransferredTransactions =

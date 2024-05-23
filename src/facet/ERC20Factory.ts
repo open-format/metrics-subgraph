@@ -5,7 +5,7 @@ import {One, loadOrCreateStats, loadOrCreateTransaction} from "../helpers";
 export function handleCreated(event: Created): void {
   //let transaction = loadOrCreateTransaction(event, "Create ERC20");
   //transaction.save();
-  log.debug("*** Transaction ERC20Factory: Create ERC20", []);
+  //log.debug("*** Transaction ERC20Factory: Create ERC20", []);
 
   // Increment ERC20 Count
   let stats = loadOrCreateStats();

@@ -25,7 +25,7 @@ export function handleTransfer(event: Transfer): void {
     : "ERC20 Transfer";
 
   //let transaction = loadOrCreateTransaction(event, type);
-  log.debug("*** Transaction ERC20Base: {}", [type]);
+  //log.debug("*** Transaction ERC20Base: {}", [type]);
 
   if (type === "ERC20 Mint") {
     stats.TokensMintedTransactions = stats.TokensMintedTransactions.plus(One);

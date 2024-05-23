@@ -16,7 +16,7 @@ export function handleCreated(event: Created): void {
 
   let transaction = loadOrCreateTransaction(event, "Create dApp");
   transaction.save();
-  log.debug("*** Transaction AppFactory: Create dApp", []);
+  //log.debug("*** Transaction AppFactory: Create dApp", []);
 
   let stats = loadOrCreateStats();
   stats.appCount = stats.appCount.plus(One);
