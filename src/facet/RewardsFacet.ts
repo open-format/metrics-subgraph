@@ -11,7 +11,7 @@ export function handleTokenMinted(event: TokenMinted): void {
   transaction.save();
 }
 
-export function handleTokenTransferred(): void {}
+export function handleTokenTransferred(event: BadgeMinted): void {}
 
 export function handleBadgeMinted(event: BadgeMinted): void {
   //log.debug("*** Transaction RewardsFacet: Reward Badge", []);
