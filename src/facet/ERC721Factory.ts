@@ -1,4 +1,4 @@
-import {DataSourceContext} from "@graphprotocol/graph-ts";
+import {DataSourceContext, log} from "@graphprotocol/graph-ts";
 import {ERC721Base, ERC721LazyMint} from "../../generated/templates";
 import {Created} from "../../generated/templates/ERC721FactoryFacet/ERC721Factory";
 import {One, loadOrCreateStats, loadOrCreateTransaction} from "../helpers";
@@ -16,6 +16,7 @@ export function handleCreated(event: Created): void {
 
   let transaction = loadOrCreateTransaction(event, "Create Badge");
   transaction.save();
+  log.debug("*** Transaction ERC721Factory: Create ERC721", []);
 
   let stats = loadOrCreateStats();
   stats.ERC721Count = stats.ERC721Count.plus(One);

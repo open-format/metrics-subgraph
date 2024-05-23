@@ -1,3 +1,4 @@
+import {log} from "@graphprotocol/graph-ts";
 import {
   BatchMinted,
   Minted,
@@ -14,6 +15,7 @@ import {
 export function handleMinted(event: Minted): void {
   //let transaction = loadOrCreateTransaction(event, "ERC721 Mint");
   //transaction.save();
+  log.debug("*** Transaction ERC721Base: ERC721 Mint", []);
 
   let stats = loadOrCreateStats();
   stats.BadgesMintedTransactions = stats.BadgesMintedTransactions.plus(One);
@@ -23,6 +25,7 @@ export function handleMinted(event: Minted): void {
 export function handleBatchMinted(event: BatchMinted): void {
   //let transaction = loadOrCreateTransaction(event, "ERC721 BatchMint");
   //transaction.save();
+  log.debug("*** Transaction ERC721Base: ERC721 BatchMint", []);
 
   let stats = loadOrCreateStats();
   stats.BadgesMintedTransactions = stats.BadgesMintedTransactions.plus(One);
@@ -35,6 +38,7 @@ export function handleTransfer(event: Transfer): void {
 
   //let transaction = loadOrCreateTransaction(event, type);
   //transaction.save();
+  log.debug("*** Transaction ERC721Base: {}", [type]);
 
   let stats = loadOrCreateStats();
   stats.BadgesTransferredTransactions =
