@@ -26,3 +26,13 @@ type Transaction @entity {
   createdAtBlock: BigInt!
   gasUsed: BigInt
 }
+
+type AppStat @entity {
+  id: ID!
+  uniqueUsers: [User!]
+  uniqueUsersCount: BigInt!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
+}

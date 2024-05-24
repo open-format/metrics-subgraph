@@ -1,5 +1,5 @@
 import {Address, ethereum, log} from "@graphprotocol/graph-ts";
-import {Stat, Transaction, User} from "../../generated/schema";
+import {Stat, Transaction, User, AppStat} from "../../generated/schema";
 import {One, Zero} from "../helpers";
 
 export function loadOrCreateTransaction(
@@ -76,4 +76,24 @@ export function loadOrCreateStats(): Stat {
   }
 
   return stats as Stat;
+}
+
+export function loadOrCreateAppStats(
+  appId: Address,
+  event: ethereum.Event
+): AppStat {
+  const id = appId.toHex();
+  let appStats = AppStat.load(id);
+
+  if (!appStats) {
+    appStats = new AppStat(id);
+    appStats.createdAt = event.block.timestamp;
+    appStats.createdAtBlock = event.block.number;
+    appStats.uniqueUsersCount = Zero;
+  }
+
+  appStats.updatedAt = event.block.timestamp;
+  appStats.updatedAtBlock = event.block.number;
+
+  return appStats as AppStat;
 }
