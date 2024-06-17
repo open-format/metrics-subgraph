@@ -68,3 +68,6 @@ typings/
 # yarn
 .yarn
 .pnp*
+
+# matchstick compiled tests
+tests/.bin
