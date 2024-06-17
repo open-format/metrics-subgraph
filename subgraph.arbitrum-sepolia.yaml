@@ -5,8 +5,10 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: AppFactory
-    network: mainnet
+    network: arbitrum-sepolia
     source:
+      address: "0x19781Af95cA4E113D5D1412452225D11A84ce992"
+      startBlock: 32647240
       abi: AppFactory
     mapping:
       kind: ethereum/events
@@ -26,7 +28,7 @@ dataSources:
 templates:
   - name: ERC721FactoryFacet
     kind: ethereum/contract
-    network: mainnet
+    network: arbitrum-sepolia
     source:
       abi: ERC721Factory
     mapping:
@@ -46,7 +48,7 @@ templates:
       file: ./src/facet/ERC721Factory.ts
   - name: ERC721Base
     kind: ethereum/contract
-    network: mainnet
+    network: arbitrum-sepolia
     source:
       abi: ERC721Base
     mapping:
@@ -70,7 +72,7 @@ templates:
       file: ./src/ERC721Base.ts
   - name: ERC721LazyMint
     kind: ethereum/contract
-    network: mainnet
+    network: arbitrum-sepolia
     source:
       abi: ERC721LazyMint
     mapping:
@@ -96,7 +98,7 @@ templates:
       file: ./src/ERC721LazyMint.ts
   - name: ERC20FactoryFacet
     kind: ethereum/contract
-    network: mainnet
+    network: arbitrum-sepolia
     source:
       abi: ERC20FactoryFacet
     mapping:
@@ -116,7 +118,7 @@ templates:
       file: ./src/facet/ERC20Factory.ts
   - name: ERC20Base
     kind: ethereum/contract
-    network: mainnet
+    network: arbitrum-sepolia
     source:
       abi: ERC20Base
     mapping:
@@ -138,7 +140,7 @@ templates:
       file: ./src/ERC20Base.ts
   - name: RewardsFacet
     kind: ethereum/contract
-    network: mainnet
+    network: arbitrum-sepolia
     source:
       abi: RewardsFacet
     mapping:

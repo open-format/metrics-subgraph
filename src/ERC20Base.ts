@@ -11,6 +11,7 @@ import {
 } from "./helpers";
 let context = dataSource.context();
 let contractAddress = Address.fromString(context.getString("ERC20Contract"));
+
 export function handleTransfer(event: Transfer): void {
   ERC20BaseContract.bind(contractAddress);
   let stats = loadOrCreateStats();
@@ -23,8 +24,6 @@ export function handleTransfer(event: Transfer): void {
     ? "ERC20 Burn"
     : "ERC20 Transfer";
 
-  let transaction = loadOrCreateTransaction(event, type);
-
   if (type === "ERC20 Mint") {
     stats.TokensMintedTransactions = stats.TokensMintedTransactions.plus(One);
   } else {
@@ -32,5 +31,4 @@ export function handleTransfer(event: Transfer): void {
       stats.TokensTransferredTransactions.plus(One);
   }
   stats.save();
-  transaction.save();
 }

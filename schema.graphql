@@ -9,8 +9,7 @@ type User @entity {
 type Stat @entity {
   id: ID!
   uniqueUsers: BigInt!
-  constellationCount: BigInt!
-  starCount: BigInt!
+  appCount: BigInt!
   ERC721Count: BigInt!
   ERC20Count: BigInt!
   TokensMintedTransactions: BigInt!
@@ -26,4 +25,14 @@ type Transaction @entity {
   createdAt: BigInt!
   createdAtBlock: BigInt!
   gasUsed: BigInt
+}
+
+type AppStat @entity {
+  id: ID!
+  uniqueUsers: [User!]
+  uniqueUsersCount: BigInt!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
 }
