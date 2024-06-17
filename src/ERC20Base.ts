@@ -1,34 +1,30 @@
-import {Address, dataSource} from "@graphprotocol/graph-ts";
-import {
-  ERC20Base as ERC20BaseContract,
-  Transfer,
-} from "../generated/templates/ERC20Base/ERC20Base";
-import {
-  One,
-  ZERO_ADDRESS,
-  loadOrCreateStats,
-  loadOrCreateTransaction,
-} from "./helpers";
-let context = dataSource.context();
-let contractAddress = Address.fromString(context.getString("ERC20Contract"));
+import { Address, dataSource } from "@graphprotocol/graph-ts";
+import { ContractURIUpdated, Transfer } from "../generated/templates/ERC20Base/ERC20Base";
+import { ZERO_ADDRESS, createTransaction } from "./helpers";
+import { ERC20_BURN_TYPE, ERC20_MINT_TYPE, ERC20_TRANSFER_TYPE, ERC20_UPDATE_TYPE } from "./helpers/transactions";
+
 
 export function handleTransfer(event: Transfer): void {
-  ERC20BaseContract.bind(contractAddress);
-  let stats = loadOrCreateStats();
+  let context = dataSource.context();
+  let appAddress = Address.fromString(context.getString("App"));
+
   const isMinted = event.params.from == ZERO_ADDRESS;
   const isBurned = event.params.to == ZERO_ADDRESS;
 
   const type = isMinted
-    ? "ERC20 Mint"
+    ? ERC20_MINT_TYPE
     : isBurned
-    ? "ERC20 Burn"
-    : "ERC20 Transfer";
+    ? ERC20_BURN_TYPE
+    : ERC20_TRANSFER_TYPE;
 
-  if (type === "ERC20 Mint") {
-    stats.TokensMintedTransactions = stats.TokensMintedTransactions.plus(One);
-  } else {
-    stats.TokensTransferredTransactions =
-      stats.TokensTransferredTransactions.plus(One);
-  }
-  stats.save();
+  const tx = createTransaction(event, type, appAddress);
+  tx.save();
+}
+
+export function handleContractURIUpdated(event: ContractURIUpdated): void {
+  let context = dataSource.context();
+  let appAddress = Address.fromString(context.getString("App"));
+
+  const tx = createTransaction(event, ERC20_UPDATE_TYPE, appAddress);
+  tx.save();
 }

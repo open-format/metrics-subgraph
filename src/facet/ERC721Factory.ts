@@ -1,23 +1,24 @@
-import {DataSourceContext} from "@graphprotocol/graph-ts";
-import {ERC721Base, ERC721LazyMint} from "../../generated/templates";
+import {Address, DataSourceContext, dataSource} from "@graphprotocol/graph-ts";
+import {ERC721Badge, ERC721Base, ERC721LazyMint} from "../../generated/templates";
 import {Created} from "../../generated/templates/ERC721FactoryFacet/ERC721Factory";
-import {One, loadOrCreateStats, loadOrCreateTransaction} from "../helpers";
+import { createTransaction } from "../helpers";
+import { BADGE_CREATE_TYPE } from "../helpers/transactions";
 
 export function handleCreated(event: Created): void {
-  let ERC721Context = new DataSourceContext();
+  let context = dataSource.context();
+  let appAddress = Address.fromString(context.getString("App"));
+  let erc721Context = new DataSourceContext();
+  erc721Context.setString("App", appAddress.toHex());
 
-  if (event.params.implementationId.toString() == "LazyMint") {
-    ERC721Context.setString("ERC721ContractLazyMint", event.params.id.toHex());
-    ERC721LazyMint.createWithContext(event.params.id, ERC721Context);
+  let implementationId = event.params.implementationId.toString();
+  if (implementationId == "LazyMint") {
+    ERC721LazyMint.createWithContext(event.params.id, erc721Context);
+  } else if (implementationId == "Badge") {
+    ERC721Badge.createWithContext(event.params.id, erc721Context);
   } else {
-    ERC721Context.setString("ERC721Contract", event.params.id.toHex());
-    ERC721Base.createWithContext(event.params.id, ERC721Context);
+    ERC721Base.createWithContext(event.params.id, erc721Context);
   }
 
-  let transaction = loadOrCreateTransaction(event, "Create Badge");
+  let transaction = createTransaction(event, BADGE_CREATE_TYPE, appAddress);
   transaction.save();
-
-  let stats = loadOrCreateStats();
-  stats.ERC721Count = stats.ERC721Count.plus(One);
-  stats.save();
 }

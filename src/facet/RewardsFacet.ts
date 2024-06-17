@@ -1,45 +1,32 @@
 import {Address, dataSource, log} from "@graphprotocol/graph-ts";
-import {
-  TokenMinted,
-  BadgeMinted,
-} from "../../generated/templates/RewardsFacet/RewardsFacet";
-import {
-  loadOrCreateTransaction,
-  loadOrCreateAppStats,
-  loadOrCreateUser,
-  One,
-} from "../helpers";
-
-let context = dataSource.context();
-let appAddress = Address.fromString(context.getString("App"));
+import { TokenMinted, BadgeMinted, BadgeTransferred, TokenTransferred } from "../../generated/templates/RewardsFacet/RewardsFacet";
+import { createTransaction } from "../helpers";
+import { BADGE_MINT_TYPE, BADGE_TRANSFER_TYPE, TOKEN_MINT_TYPE, TOKEN_TRANSFER_TYPE } from "../helpers/transactions";
 
 export function handleTokenMinted(event: TokenMinted): void {
-  let user = loadOrCreateUser(event.params.to, event);
-  let appStats = loadOrCreateAppStats(appAddress, event);
-
-  log.debug("app stats user id: {}", [user.id]);
-
-  if (appStats.uniqueUsers == null) {
-    appStats.uniqueUsers = new Array<string>();
-  }
-
-  let uniqueUsers = appStats.uniqueUsers as Array<string>;
-
-  if (uniqueUsers.indexOf(user.id) == -1) {
-    uniqueUsers.push(user.id);
-    appStats.uniqueUsersCount = appStats.uniqueUsersCount.plus(One);
-  }
-  appStats.uniqueUsers = uniqueUsers;
-
-  let transaction = loadOrCreateTransaction(event, "Reward XP");
+  let context = dataSource.context();
+  let appAddress = Address.fromString(context.getString("App"));
+  let transaction = createTransaction(event, TOKEN_MINT_TYPE, appAddress);
   transaction.save();
 }
 
-export function handleTokenTransferred(event: BadgeMinted): void {}
+export function handleTokenTransferred(event: TokenTransferred): void {
+  let context = dataSource.context();
+  let appAddress = Address.fromString(context.getString("App"));
+  let transaction = createTransaction(event, TOKEN_TRANSFER_TYPE, appAddress);
+  transaction.save();
+}
 
 export function handleBadgeMinted(event: BadgeMinted): void {
-  let transaction = loadOrCreateTransaction(event, "Reward Badge");
+  let context = dataSource.context();
+  let appAddress = Address.fromString(context.getString("App"));
+  let transaction = createTransaction(event, BADGE_MINT_TYPE, appAddress);
   transaction.save();
 }
 
-export function handleBadgeTransferred(): void {}
+export function handleBadgeTransferred(event: BadgeTransferred): void {
+  let context = dataSource.context();
+  let appAddress = Address.fromString(context.getString("App"));
+  let transaction = createTransaction(event, BADGE_TRANSFER_TYPE, appAddress);
+  transaction.save();
+}

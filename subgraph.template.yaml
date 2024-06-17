@@ -1,4 +1,4 @@
-specVersion: 0.0.4
+specVersion: 1.1.0
 description: Open Format
 schema:
   file: ./schema.graphql
@@ -20,7 +20,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Transaction
-        - Stat
+        - App
         - User
       abis:
         - name: AppFactory
@@ -41,7 +41,6 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Transaction
-        - Stat
         - User
       abis:
         - name: ERC721Factory
@@ -61,7 +60,6 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Transaction
-        - Stat
         - User
       abis:
         - name: ERC721Base
@@ -85,7 +83,6 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Transaction
-        - Stat
         - User
       abis:
         - name: ERC721LazyMint
@@ -100,6 +97,33 @@ templates:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: ./src/ERC721LazyMint.ts
+  - name: ERC721Badge
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: ERC721Badge
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transaction
+        - User
+      abis:
+        - name: ERC721Badge
+          file: ./abis/ERC721Badge.json
+      eventHandlers:
+        - event: Minted(address,string)
+          handler: handleMinted
+        - event: BatchMinted(address,uint256,string)
+          handler: handleBatchMinted
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: UpdatedBaseURI(string)
+          handler: handleUpdatedBaseURI
+        - event: BatchMetadataUpdate(uint256,uint256)
+          handler: handleBatchMetadataUpdate
+      file: ./src/ERC721Badge.ts
   - name: ERC20FactoryFacet
     kind: ethereum/contract
     network: {{network}}
@@ -111,7 +135,6 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Transaction
-        - Stat
         - User
       abis:
         - name: ERC20FactoryFacet
@@ -131,7 +154,6 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Transaction
-        - Stat
         - User
       abis:
         - name: ERC20Base
@@ -153,7 +175,6 @@ templates:
       language: wasm/assemblyscript
       entities:
         - Transaction
-        - Stat
         - User
       abis:
         - name: RewardsFacet
