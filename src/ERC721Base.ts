@@ -1,34 +1,29 @@
-import {
-  BatchMinted,
-  Minted,
-} from "../generated/templates/ERC721Base/ERC721Base";
-
-import {Transfer} from "../generated/templates/ERC721Base/ERC721Base";
-import {
-  One,
-  ZERO_ADDRESS,
-  loadOrCreateStats,
-  loadOrCreateTransaction,
-} from "./helpers";
+import { Address, dataSource } from "@graphprotocol/graph-ts";
+import { BatchMinted, Minted } from "../generated/templates/ERC721Base/ERC721Base";
+import { Transfer } from "../generated/templates/ERC721Base/ERC721Base";
+import { ZERO_ADDRESS, createTransaction} from "./helpers";
+import { ERC721_BATCH_MINTED_TYPE, ERC721_BURN_TYPE, ERC721_MINTED_TYPE, ERC721_TRANSFER_TYPE } from "./helpers/transactions";
 
 export function handleMinted(event: Minted): void {
-  let stats = loadOrCreateStats();
-  stats.BadgesMintedTransactions = stats.BadgesMintedTransactions.plus(One);
-  stats.save();
+  let appAddress = Address.fromString(dataSource.context().getString("App"));
+
+  let transaction = createTransaction(event, ERC721_MINTED_TYPE, appAddress);
+  transaction.save();
 }
 
 export function handleBatchMinted(event: BatchMinted): void {
-  let stats = loadOrCreateStats();
-  stats.BadgesMintedTransactions = stats.BadgesMintedTransactions.plus(One);
-  stats.save();
+  let appAddress = Address.fromString(dataSource.context().getString("App"));
+
+  // TODO: Should we add a transaction for each badge?
+  let transaction = createTransaction(event, ERC721_BATCH_MINTED_TYPE, appAddress);
+  transaction.save();
 }
 
 export function handleTransfer(event: Transfer): void {
   const isBurned = event.params.to == ZERO_ADDRESS;
-  const type = isBurned ? "ERC721 Burn" : "ERC721 Transfer";
+  const type = isBurned ? ERC721_BURN_TYPE : ERC721_TRANSFER_TYPE;
+  let appAddress = Address.fromString(dataSource.context().getString("App"));
 
-  let stats = loadOrCreateStats();
-  stats.BadgesTransferredTransactions =
-    stats.BadgesTransferredTransactions.plus(One);
-  stats.save();
+  let transaction = createTransaction(event, type, appAddress);
+  transaction.save();
 }
