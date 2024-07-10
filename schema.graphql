@@ -15,7 +15,7 @@ type Transaction @entity(timeseries: true) {
   createdAtBlock: BigInt!
 }
 
-type TransactionStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
+type TransactionTypeStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
   id: Int8!
   timestamp: Timestamp!
   type: String!
@@ -25,7 +25,7 @@ type TransactionStat @aggregation(intervals: ["hour", "day"], source: "Transacti
   totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
 }
 
-type TransactionAppStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
+type TransactionTypeAppStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
   id: Int8!
   timestamp: Timestamp!
   type: String!
@@ -36,7 +36,7 @@ type TransactionAppStat @aggregation(intervals: ["hour", "day"], source: "Transa
   totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
 }
 
-type TransactionUserStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
+type TransactionTypeUserStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
   id: Int8!
   timestamp: Timestamp!
   type: String!
@@ -47,10 +47,41 @@ type TransactionUserStat @aggregation(intervals: ["hour", "day"], source: "Trans
   totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
 }
 
-type TransactionUserAppStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
+type TransactionTypeUserAppStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
   id: Int8!
   timestamp: Timestamp!
   type: String!
+  userId: String!
+  appId: String!
+  transactionCount: Int8! @aggregate(fn: "count")
+  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
+  gasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed")
+  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+}
+
+type TransactionAppStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
+  id: Int8!
+  timestamp: Timestamp!
+  appId: String!
+  transactionCount: Int8! @aggregate(fn: "count")
+  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
+  gasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed")
+  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+}
+
+type TransactionUserStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
+  id: Int8!
+  timestamp: Timestamp!
+  userId: String!
+  transactionCount: Int8! @aggregate(fn: "count")
+  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
+  gasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed")
+  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+}
+
+type TransactionUserAppStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
+  id: Int8!
+  timestamp: Timestamp!
   userId: String!
   appId: String!
   transactionCount: Int8! @aggregate(fn: "count")
