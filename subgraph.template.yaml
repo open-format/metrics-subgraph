@@ -28,6 +28,7 @@ dataSources:
       eventHandlers:
         - event: Created(address,address,string)
           handler: handleCreated
+          receipt: true
       file: ./src/AppFactory.ts
 templates:
   - name: ERC721FactoryFacet
@@ -48,6 +49,7 @@ templates:
       eventHandlers:
         - event: Created(address,address,string,string,address,uint16,bytes32)
           handler: handleCreated
+          receipt: true
       file: ./src/facet/ERC721Factory.ts
   - name: ERC721Base
     kind: ethereum/contract
@@ -67,10 +69,13 @@ templates:
       eventHandlers:
         - event: Minted(address,string)
           handler: handleMinted
+          receipt: true
         - event: BatchMinted(address,uint256,string)
           handler: handleBatchMinted
+          receipt: true
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
+          receipt: true
       file: ./src/ERC721Base.ts
   - name: ERC721LazyMint
     kind: ethereum/contract
@@ -90,12 +95,16 @@ templates:
       eventHandlers:
         - event: Minted(address,string)
           handler: handleMinted
+          receipt: true
         - event: BatchMinted(address,uint256,string)
           handler: handleBatchMinted
+          receipt: true
         - event: TokensLazyMinted(indexed uint256,uint256,string,bytes)
           handler: handleLazyMint
+          receipt: true
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
+          receipt: true
       file: ./src/ERC721LazyMint.ts
   - name: ERC721Badge
     kind: ethereum/contract
@@ -115,14 +124,19 @@ templates:
       eventHandlers:
         - event: Minted(address,string)
           handler: handleMinted
+          receipt: true
         - event: BatchMinted(address,uint256,string)
           handler: handleBatchMinted
+          receipt: true
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
+          receipt: true
         - event: UpdatedBaseURI(string)
           handler: handleUpdatedBaseURI
+          receipt: true
         - event: BatchMetadataUpdate(uint256,uint256)
           handler: handleBatchMetadataUpdate
+          receipt: true
       file: ./src/ERC721Badge.ts
   - name: ERC20FactoryFacet
     kind: ethereum/contract
@@ -142,6 +156,7 @@ templates:
       eventHandlers:
         - event: Created(address,address,string,string,uint8,uint256,bytes32)
           handler: handleCreated
+          receipt: true
       file: ./src/facet/ERC20Factory.ts
   - name: ERC20Base
     kind: ethereum/contract
@@ -161,8 +176,10 @@ templates:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
+          receipt: true
         - event: ContractURIUpdated(string,string)
           handler: handleContractURIUpdated
+          receipt: true
       file: ./src/ERC20Base.ts
   - name: RewardsFacet
     kind: ethereum/contract
@@ -184,10 +201,14 @@ templates:
       eventHandlers:
         - event: TokenMinted(address,address,uint256,bytes32,bytes32,string)
           handler: handleTokenMinted
+          receipt: true
         - event: TokenTransferred(address,address,uint256,bytes32,bytes32,string)
           handler: handleTokenTransferred
+          receipt: true
         - event: BadgeMinted(address,uint256,address,bytes32,bytes32,string)
           handler: handleBadgeMinted
+          receipt: true
         - event: BadgeTransferred(address,address,uint256,bytes32,bytes32,string)
           handler: handleBadgeTransferred
+          receipt: true
       file: ./src/facet/RewardsFacet.ts
