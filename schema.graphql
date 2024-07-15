@@ -15,6 +15,15 @@ type Transaction @entity(timeseries: true) {
   createdAtBlock: BigInt!
 }
 
+type TransactionStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
+  id: Int8!
+  timestamp: Timestamp!
+  transactionCount: Int8! @aggregate(fn: "count")
+  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
+  gasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed")
+  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+}
+
 type TransactionTypeStat @aggregation(intervals: ["hour", "day"], source: "Transaction") {
   id: Int8!
   timestamp: Timestamp!
