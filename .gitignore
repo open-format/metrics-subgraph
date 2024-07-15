@@ -71,3 +71,5 @@ typings/
 
 # matchstick compiled tests
 tests/.bin
+
+subgraph.local.yaml
