@@ -1,80 +1,249 @@
-# What is a subgraph?
+# Metrics Subgraph
 
-A subgraph is a tool used in decentralized applications built on blockchain technology, particularly those built on the Ethereum network. It is essentially a collection of GraphQL APIs that developers can use to extract data from the blockchain.
+The metrics subgraph aggregates all transactions using open format contracts into easily filterable by dimensions.
 
-The benefits of using a subgraph are numerous. For one, subgraphs make it easier to query data from the blockchain in a structured and organized manner, allowing developers to efficiently extract the data they need for their applications. Subgraphs also help to reduce the load on the blockchain network by offloading the querying of data to a separate layer.
+## Deployments
+| Chain                      | subgraph                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------ |
+| Arbitrum Sepolia (testnet) | https://api.studio.thegraph.com/proxy/82634/metrics-arbitrum-sepolia/version/latest/ |
 
-We have three subgraph deployed on Polygon Mumbai, Polygon Mainnet, Aurora Mainnet and Aurora Testnet. Our subgraphs use [The Graph Protocol](https://thegraph.com/en/)
+## Querying
 
-## Features
+### Dimensions
 
-✅ Real-time indexing of all Open Format contracts
+The schema uses the following pattern **TransactionDimension1Dimension2...Stat**.
+`TransactionStat` will give aggregations across open format ecosystem.
+If we want aggregation by Transaction Type, User and App we should query aggregation `TransactionTypeUserAppStat`.
 
-✅ Indexing of all Open Format tokens
+```
+TransactionStat
+TransactionTypeStat
+TransactionTypeAppStat
+TransactionTypeUserStat
+TransactionTypeUserAppStat
+TransactionAppStat
+TransactionUserStat
+TransactionUserAppStat
+```
 
-✅ Indexing of all Open Format actions and missions
+See [schema.graphql](/schema.graphql) for different properties available in each dimension
 
-✅ Sortable and filterable
+### Totals
 
-🔨 Indexed NFT metadata
+#### Total count of apps created
 
-🔨 NFT Drop claim conditions
-
-## Examples
-
-Get all constellations:
-
-[Live example](https://api.thegraph.com/subgraphs/name/open-format/mumbai-v2/graphql?query=%7B%0A++constellations+%7B%0A++++id%0A++++name%0A++++owner+%7B%0A++++++id%0A++++%7D%0A++%7D%0A%7D&variables=%22%7B%5Cn++%5C%22constellation%5C%22%3A+%5C%220x8a19c98762a3fb129ed82f01f4397b351216e7ce%5C%22%5Cn%7D%22)
+[Live example ->](https://api.studio.thegraph.com/proxy/82634/metrics-arbitrum-sepolia/version/latest/graphql?query=%7B%0A++transactionTypeStats%28interval%3A+hour%2C+first%3A1%2C+where%3A+%7B%0A+++type%3A%22App+Create%22%0A++%7D%29%7B%0A++++id%0A++++totalCount%0A++++transactionCount%0A++++timestamp%0A++++gasUsed%0A++++totalGasUsed%0A++%7D%0A%7D)
 
 ```graphql
-query getAllConstellations {
-  constellations {
-    id
-    name
-    owner {
-      id
-    }
+{
+  transactionTypeStats(interval: hour, first:1, where: {
+   type:"App Create"
+  }){
+    totalCount
   }
 }
 ```
 
-Get all stars for a given constellation:
-
-[Live example](https://api.thegraph.com/subgraphs/name/open-format/mumbai-v2/graphql?query=query+getAllConstellationStars+%7B%0A++stars%28where%3A+%7Bconstellation%3A+%220x7087e19982a30de8d2179ca9fc76d0b625564a00%22%7D%29+%7B%0A++++id%0A++++name%0A++++xpToken+%7B%0A++++++id%0A++++%7D%0A++%7D%0A%7D&variables=%22%7B%5Cn++%5C%22constellation%5C%22%3A+%5C%220x8a19c98762a3fb129ed82f01f4397b351216e7ce%5C%22%5Cn%7D%22&operationName=getAllConstellationStars)
-
+#### Total transactions
 ```graphql
-query getAllConstellationStars {
-  stars(where: {constellation: "0x7087e19982a30de8d2179ca9fc76d0b625564a00"}) {
-    id
-    name
-    xpToken {
-      id
-    }
+{
+  transactionStats(interval: hour, first:1){
+    totalCount
   }
 }
 ```
 
-Get all token balances and collected badges for a given user:
-
-[Live example](https://api.thegraph.com/subgraphs/name/open-format/mumbai-v2/graphql?query=query+getAllUserTokens+%7B%0A++user%28id%3A+%220x03755352654d73da06756077dd7f040adce3fd58%22%29+%7B%0A++++id%0A++++collectedBadges+%7B%0A++++++id%0A++++%7D%0A++++tokenBalances+%7B%0A++++++balance%0A++++%7D%0A++%7D%0A%7D&variables=%22%7B%5Cn++%5C%22constellation%5C%22%3A+%5C%220x8a19c98762a3fb129ed82f01f4397b351216e7ce%5C%22%5Cn%7D%22&operationName=getAllUserTokens)
-
+#### Total transactions for a given app
 ```graphql
-query getAllUserTokens {
-  user(id: "0x03755352654d73da06756077dd7f040adce3fd58") {
-    id
-    collectedBadges {
-      id
-    }
-    tokenBalances {
-      balance
-    }
+{
+  transactionAppStats(interval: hour, first:1 , where: {
+    appId: "0xad2143d3944d31143cbb46a79f2b56b45754119c"
+  }){
+    totalCount
   }
 }
 ```
 
-## Documentation
+#### Total transactions for a given user
+```graphql
+{
+  transactionUserStats(interval: hour, first:1 , where: {
+    userId: "0xad2143d3944d31143cbb46a79f2b56b45754119c"
+  }){
+    totalCount
+  }
+}
+```
 
-Visit [https://docs.openformat.tech](https://docs.openformat.tech) to view documentation.
+#### Total transactions of type "Reward XP" for a given app
+```graphql
+{
+  transactionTypeAppStats(interval: hour, first:1 , where: {
+    appId: "0xad2143d3944d31143cbb46a79f2b56b45754119c"
+    type: "Reward XP"
+  }){
+    totalCount
+  }
+}
+```
+See the [list of transaction types](#transaction-types) for different options.
+
+## Time Aggregation
+
+Time aggregations happen hourly or daily. By setting the `interval` to `day` or `hour`. The same logic can be applied across all dimensions.
+
+Lets use apps created as an example
+
+### Apps created over time
+The following query will return a list of the 100 latest aggregated days where apps where created.
+
+> Note: Days where the transaction count is zero are skipped.
+
+```graphql
+{
+  transactionTypeStats(interval: day, first:100, where: {
+   type:"App Create"
+  }){
+    totalCount
+    transactionCount
+    timestamp
+  }
+}
+```
+For this query the results can be understood as:
+- `totalCount`: The total number of apps created.
+- `transactionCount`: The number of apps created that day.
+- `timestamp`: UNIX time in microseconds when the stats were aggregated
+
+### Apps created between two dates
+To get specific data between dates timestamps in microseconds can be given using `timestamp_lte` (<=) and `timestamp_gte` (>=)
+
+For example:
+1720828800000000 - Saturday, 13 July 2024 00:00:00
+1719705600000000 - Sunday, 30 June 2024 00:00:00
+```graphql
+{
+  transactionTypeStats(interval: day, first:100, where: {
+   type:"App Create"
+   timestamp_lte: "1720828800000000"
+   timestamp_gte: "1719705600000000"
+  }){
+    totalCount
+    transactionCount
+  }
+}
+```
+
+### Apps created in the last hour
+Because the data is aggregated at most every hour, on the hour, we need to manually aggregate the most recent transactions if we want a faster frequency. To do so we can query `transactions` manually with the appropriate filters to include the latest hour
+
+For example lets use the date `Sat Jul 13 2024` and imagine the time is between 20:00 and 21:00 GMT to get all "App Create" transactions we need to add the aggregated data to the current hour.
+
+```graphql
+{
+  transactions(
+    orderBy:timestamp,
+    orderDirection: desc,
+    where: {
+     	type:"App Create",
+     	timestamp_gt: "1720900800000000",
+    	timestamp_lt: "1720904400000000",
+    }
+  ){
+    id
+    type
+    timestamp
+  }
+  transactionTypeStats(interval: hour, first:1, where: {
+   type:"App Create"
+   timestamp_lte: "1720900800000000"
+  }){
+    totalCount
+  }
+}
+```
+
+Will give us the following result:
+```JSON
+{
+  "data": {
+    "transactions": [
+      {
+        "id": "273273466076004352",
+        "type": "App Create",
+        "timestamp": "1720903142000000"
+      }
+    ],
+    "transactionTypeStats": [
+      {
+        "totalCount": "379",
+        "transactionCount": "1"
+      }
+    ]
+  }
+}
+```
+We then can add `data.transactions.length` to `data.transactionTypeStats[0].totalCount` to get the most up to date count.
+
+## Gas
+
+`gasUsed` can be added to queries to get total gas used in wei within that aggregation interval. `totalGasUsed` will give you the total cumulative gas used. Just like `count` and `transactionCount` this works across all dimensions.
+
+For example if we use the total apps created query
+- `totalCount`: The total number of apps created
+- `totalGasUsed` : The total gas used creating apps
+- `gasUsed`: The total gas used within the latest aggregated hour
+```
+{
+  transactionTypeStats(interval: hour, first:1, where: {
+   type:"App Create"
+  }){
+    totalCount
+    gasUsed
+    totalGasUsed
+  }
+}
+```
+
+## Transaction Types
+```
+// ERC721 Badge
+"ERC721Badge Minted"
+"ERC721Badge Batch Minted"
+"ERC721Badge Transfer"
+"ERC721Badge Burn"
+"ERC721Badge Update"
+
+// ERC721 Base
+"ERC721 Minted"
+"ERC721 Batch Minted"
+"ERC721 Transfer"
+"ERC721 Burn"
+
+// ERC721 Lazy Mint
+"ERC721Lazy Mint"
+"ERC721Lazy Batch Mint"
+"ERC721Lazy Lazy Mint"
+"ERC721Lazy Transfer"
+"ERC721Lazy Burn"
+
+// Credits
+"ERC20 Create"
+"ERC20 Mint"
+"ERC20 Burn"
+"ERC20 Transfer"
+"ERC20 Update"
+
+// Rewarding
+"Reward XP"
+"Transfer Token"
+"Badge Create"
+"Reward Badge"
+"Transfer Badge"
+
+// App Factory
+"App Create"
+```
 
 ## Local Development
 
