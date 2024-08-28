@@ -19,6 +19,5 @@ export function handleCreated(event: Created): void {
     ERC721Base.createWithContext(event.params.id, erc721Context);
   }
 
-  let transaction = createTransaction(event, BADGE_CREATE_TYPE, appAddress);
-  transaction.save();
+  createTransaction(event, BADGE_CREATE_TYPE, appAddress);
 }

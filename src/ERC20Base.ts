@@ -17,14 +17,12 @@ export function handleTransfer(event: Transfer): void {
     ? ERC20_BURN_TYPE
     : ERC20_TRANSFER_TYPE;
 
-  const tx = createTransaction(event, type, appAddress);
-  tx.save();
+  createTransaction(event, type, appAddress);
 }
 
 export function handleContractURIUpdated(event: ContractURIUpdated): void {
   let context = dataSource.context();
   let appAddress = Address.fromString(context.getString("App"));
 
-  const tx = createTransaction(event, ERC20_UPDATE_TYPE, appAddress);
-  tx.save();
+  createTransaction(event, ERC20_UPDATE_TYPE, appAddress);
 }
