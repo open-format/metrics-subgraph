@@ -17,8 +17,8 @@ type Transaction @entity(timeseries: true) {
 
 type TransactionStat @entity {
   id: ID!
-  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
-  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+  totalCount: Int8!
+  totalGasUsed: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -29,8 +29,8 @@ type TransactionTypeStat @entity {
   # `${transaction-type}`
   id: ID!
   type: String!
-  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
-  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+  totalCount: Int8!
+  totalGasUsed: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -42,8 +42,8 @@ type TransactionTypeAppStat @entity {
   id: ID!
   type: String!
   appId: String!
-  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
-  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+  totalCount: Int8!
+  totalGasUsed: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -55,8 +55,8 @@ type TransactionTypeUserStat @entity {
   id: ID!
   type: String!
   userId: String!
-  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
-  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+  totalCount: Int8!
+  totalGasUsed: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -69,8 +69,8 @@ type TransactionTypeUserAppStat @entity {
   type: String!
   userId: String!
   appId: String!
-  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
-  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+  totalCount: Int8!
+  totalGasUsed: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -81,8 +81,8 @@ type TransactionAppStat @entity {
   # `${app-id}`
   id: ID!
   appId: String!
-  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
-  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+  totalCount: Int8!
+  totalGasUsed: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -93,8 +93,8 @@ type TransactionUserStat @entity {
   # `${user-id}`
   id: ID!
   userId: String!
-  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
-  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+  totalCount: Int8!
+  totalGasUsed: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -106,8 +106,8 @@ type TransactionUserAppStat @entity {
   id: ID!
   userId: String!
   appId: String!
-  totalCount: Int8! @aggregate(fn: "count", cumulative: true)
-  totalGasUsed: BigInt! @aggregate(fn: "sum", arg: "gasUsed", cumulative: true)
+  totalCount: Int8!
+  totalGasUsed: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
