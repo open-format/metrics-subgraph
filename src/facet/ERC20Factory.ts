@@ -13,6 +13,5 @@ export function handleCreated(event: Created): void {
   ERC20Base.createWithContext(event.params.id, erc20Context);
 
   
-  let tx = createTransaction(event, ERC20_CREATE_TYPE, appAddress);
-  tx.save();
+  createTransaction(event, ERC20_CREATE_TYPE, appAddress);
 }

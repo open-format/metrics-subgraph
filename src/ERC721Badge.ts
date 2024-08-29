@@ -6,15 +6,13 @@ import { ERC721_BADGE_BATCH_MINTED_TYPE, ERC721_BADGE_BURN_TYPE, ERC721_BADGE_MI
 
 export function handleMinted(event: Minted): void {
   let appAddress = Address.fromString(dataSource.context().getString("App"));
-  let transaction = createTransaction(event, ERC721_BADGE_MINTED_TYPE, appAddress);
-  transaction.save();
+  createTransaction(event, ERC721_BADGE_MINTED_TYPE, appAddress);
 
 }
 
 export function handleBatchMinted(event: BatchMinted): void {
   let appAddress = Address.fromString(dataSource.context().getString("App"));
-  let transaction = createTransaction(event, ERC721_BADGE_BATCH_MINTED_TYPE, appAddress);
-  transaction.save();
+  createTransaction(event, ERC721_BADGE_BATCH_MINTED_TYPE, appAddress);
 }
 
 export function handleTransfer(event: Transfer): void {
@@ -22,14 +20,12 @@ export function handleTransfer(event: Transfer): void {
   const type = isBurned ? ERC721_BADGE_BURN_TYPE : ERC721_BADGE_TRANSFER_TYPE;
   let appAddress = Address.fromString(dataSource.context().getString("App"));
 
-  let transaction = createTransaction(event, type, appAddress);
-  transaction.save();
+  createTransaction(event, type, appAddress);
 }
 
 export function handleUpdatedBaseURI(event: UpdatedBaseURI): void {
   let appAddress = Address.fromString(dataSource.context().getString("App"));
-  let transaction = createTransaction(event, ERC721_BADGE_UPDATE_TYPE, appAddress);
-  transaction.save();
+  createTransaction(event, ERC721_BADGE_UPDATE_TYPE, appAddress);
 }
 
 export function handleBatchMetadataUpdate(event: BatchMetadataUpdate): void {

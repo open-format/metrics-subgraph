@@ -29,3 +29,5 @@ export const BADGE_MINT_TYPE = "Reward Badge";
 export const BADGE_TRANSFER_TYPE = "Transfer Badge";
 
 export const APP_CREATE_TYPE = "App Create";
+
+export const GLOBAL_TRANSACTION_STAT_ID = "TransactionStat";

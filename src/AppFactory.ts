@@ -12,6 +12,5 @@ export function handleCreated(event: Created): void {
   ERC20FactoryFacet.createWithContext(event.params.id, context);
   RewardsFacet.createWithContext(event.params.id, context);
 
-  let transaction = createTransaction(event, APP_CREATE_TYPE, event.params.id);
-  transaction.save();
+  createTransaction(event, APP_CREATE_TYPE, event.params.id);
 }
