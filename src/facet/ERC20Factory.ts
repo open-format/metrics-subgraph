@@ -1,7 +1,7 @@
 import { Address, DataSourceContext, dataSource } from "@graphprotocol/graph-ts";
 import { Created } from "../../generated/templates/ERC20FactoryFacet/ERC20FactoryFacet";
 import { createTransaction } from "../helpers";
-import { ERC20_CREATE_TYPE } from "../helpers/transactions";
+import { TOKEN_CREATE_TYPE } from "../helpers/transactions";
 import { ERC20Base } from "../../generated/templates";
 
 export function handleCreated(event: Created): void {
@@ -13,5 +13,5 @@ export function handleCreated(event: Created): void {
   ERC20Base.createWithContext(event.params.id, erc20Context);
 
   
-  createTransaction(event, ERC20_CREATE_TYPE, appAddress);
+  createTransaction(event, TOKEN_CREATE_TYPE, appAddress);
 }

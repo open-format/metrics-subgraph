@@ -4,8 +4,8 @@ type User @entity(immutable: true) {
   createdAtBlock: BigInt!
 }
 
-type Transaction @entity(timeseries: true) {
-  id: Int8!
+type Transaction @entity(immutable: true) {
+  id: ID!
   timestamp: Timestamp!
   type: String!
   userId: String!
