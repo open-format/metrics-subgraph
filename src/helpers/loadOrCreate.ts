@@ -38,7 +38,7 @@ export function createOrUpdateTransactionStat(event: ethereum.Event): void {
     stat = new TransactionStat(GLOBAL_TRANSACTION_STAT_ID)
     stat.createdAt = event.block.timestamp;
     stat.createdAtBlock = event.block.number;
-    stat.totalCount = 1;
+    stat.totalCount = 0;
     stat.totalGasUsed = BigInt.fromI32(0);
   }
   stat.updatedAt = event.block.timestamp;
