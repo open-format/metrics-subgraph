@@ -11,6 +11,7 @@
     "prepare:arbitrum-sepolia": "mustache networks/arbitrum-sepolia.json subgraph.template.yaml subgraph.arbitrum-sepolia.yaml",
     "gen:arbitrum-sepolia": "graph codegen subgraph.arbitrum-sepolia.yaml",
     "deploy:arbitrum-sepolia": "graph deploy --studio metrics-arbitrum-sepolia subgraph.arbitrum-sepolia.yaml",
+    "deploy-alchemy:arbitrum-sepolia": "dotenv cross-var -- graph deploy open-format-metrics-arbitrum-sepolia --version-label %ALCHEMY_SUBGRAPH_VERSION_ARBITRUM_SEPOLIA% --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key %ALCHEMY_DEPLOY_KEY% --ipfs https://ipfs.satsuma.xyz subgraph.arbitrum-sepolia.yaml",
     "build": "graph build",
     "auth": "dotenv cross-var -- graph auth --studio %GRAPH_DEPLOY_KEY%",
     "test": "graph test -v 0.6.0 --logs"
