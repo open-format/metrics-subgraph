@@ -43,7 +43,7 @@ export function createOrUpdateTransactionStat(event: ethereum.Event): void {
   stat.updatedAt = event.block.timestamp;
   stat.updatedAtBlock = event.block.number;
   stat.totalCount = stat.totalCount + 1;
-  stat.totalGasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
   stat.save();
 }
 
@@ -62,7 +62,7 @@ export function createOrUpdateTransactionTypeStat(event: ethereum.Event, type: s
   stat.updatedAt = event.block.timestamp;
   stat.updatedAtBlock = event.block.number;
   stat.totalCount = stat.totalCount + 1;
-  stat.totalGasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
   stat.save();
 }
 
@@ -83,7 +83,7 @@ export function createOrUpdateTransactionTypeAppStat(event: ethereum.Event, type
   stat.updatedAt = event.block.timestamp;
   stat.updatedAtBlock = event.block.number;
   stat.totalCount = stat.totalCount + 1;
-  stat.totalGasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
   stat.save();
 }
 
@@ -104,7 +104,7 @@ export function createOrUpdateTransactionTypeUserStat(event: ethereum.Event, typ
   stat.updatedAt = event.block.timestamp;
   stat.updatedAtBlock = event.block.number;
   stat.totalCount = stat.totalCount + 1;
-  stat.totalGasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
   stat.save();
 }
 
@@ -127,7 +127,7 @@ export function createOrUpdateTransactionTypeUserAppStat(event: ethereum.Event, 
   stat.updatedAt = event.block.timestamp;
   stat.updatedAtBlock = event.block.number;
   stat.totalCount = stat.totalCount + 1;
-  stat.totalGasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
   stat.save();
 }
 
@@ -147,7 +147,7 @@ export function createOrUpdateTransactionAppStat(event: ethereum.Event, appAddre
   stat.updatedAt = event.block.timestamp;
   stat.updatedAtBlock = event.block.number;
   stat.totalCount = stat.totalCount + 1;
-  stat.totalGasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
   stat.save();
 }
 
@@ -167,7 +167,7 @@ export function createOrUpdateTransactionUserStat(event: ethereum.Event): void {
   stat.updatedAt = event.block.timestamp;
   stat.updatedAtBlock = event.block.number;
   stat.totalCount = stat.totalCount + 1;
-  stat.totalGasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
   stat.save();
 }
 
@@ -189,7 +189,7 @@ export function createOrUpdateTransactionUserAppStat(event: ethereum.Event, appA
   stat.updatedAt = event.block.timestamp;
   stat.updatedAtBlock = event.block.number;
   stat.totalCount = stat.totalCount + 1;
-  stat.totalGasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
   stat.save();
 }
 
