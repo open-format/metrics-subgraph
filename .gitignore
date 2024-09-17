@@ -72,4 +72,7 @@ typings/
 # matchstick compiled tests
 tests/.bin
 
-subgraph.local.yaml
+# generted subgraph.yaml files
+subgraph.*.yaml
+# Except for subgraph.template.yaml
+!subgraph.template.yaml
