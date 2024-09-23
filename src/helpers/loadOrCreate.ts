@@ -38,7 +38,8 @@ export function createOrUpdateTransactionStat(event: ethereum.Event): void {
     stat = new TransactionStat(GLOBAL_TRANSACTION_STAT_ID)
     stat.createdAt = event.block.timestamp;
     stat.createdAtBlock = event.block.number;
-    stat.totalCount = 1;
+    stat.totalCount = 0;
+    stat.totalGasUsed = BigInt.fromI32(0);
   }
   stat.updatedAt = event.block.timestamp;
   stat.updatedAtBlock = event.block.number;
@@ -55,6 +56,7 @@ export function createOrUpdateTransactionTypeStat(event: ethereum.Event, type: s
     stat.createdAt = event.block.timestamp;
     stat.createdAtBlock = event.block.number;
     stat.totalCount = 0;
+    stat.totalGasUsed = BigInt.fromI32(0);
   }
   
   stat.type = type;
@@ -75,6 +77,7 @@ export function createOrUpdateTransactionTypeAppStat(event: ethereum.Event, type
     stat.createdAt = event.block.timestamp;
     stat.createdAtBlock = event.block.number;
     stat.totalCount = 0;
+    stat.totalGasUsed = BigInt.fromI32(0);
   }
   
   stat.type = type;
@@ -96,6 +99,7 @@ export function createOrUpdateTransactionTypeUserStat(event: ethereum.Event, typ
     stat.createdAt = event.block.timestamp;
     stat.createdAtBlock = event.block.number;
     stat.totalCount = 0;
+    stat.totalGasUsed = BigInt.fromI32(0);
   }
 
   stat.type = type;
@@ -118,6 +122,7 @@ export function createOrUpdateTransactionTypeUserAppStat(event: ethereum.Event, 
     stat.createdAt = event.block.timestamp;
     stat.createdAtBlock = event.block.number;
     stat.totalCount = 0;
+    stat.totalGasUsed = BigInt.fromI32(0);
   }
 
   stat.type = type;
@@ -140,6 +145,7 @@ export function createOrUpdateTransactionAppStat(event: ethereum.Event, appAddre
     stat.createdAt = event.block.timestamp;
     stat.createdAtBlock = event.block.number;
     stat.totalCount = 0;
+    stat.totalGasUsed = BigInt.fromI32(0);
   }
 
   stat.appId = appId;
@@ -160,6 +166,7 @@ export function createOrUpdateTransactionUserStat(event: ethereum.Event): void {
     stat.createdAt = event.block.timestamp;
     stat.createdAtBlock = event.block.number;
     stat.totalCount = 0;
+    stat.totalGasUsed = BigInt.fromI32(0);
   }
 
   stat.userId = userId;
@@ -181,6 +188,7 @@ export function createOrUpdateTransactionUserAppStat(event: ethereum.Event, appA
     stat.createdAt = event.block.timestamp;
     stat.createdAtBlock = event.block.number;
     stat.totalCount = 0;
+    stat.totalGasUsed = BigInt.fromI32(0);
   }
 
   stat.userId = userId;
