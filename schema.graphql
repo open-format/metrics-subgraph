@@ -7,10 +7,12 @@ type User @entity(immutable: true) {
 type Transaction @entity(immutable: true) {
   id: ID!
   timestamp: Timestamp!
-  type: String!
+  transactionType: String!
+  functionSelector: String!
   userId: String!
   appId: String!
   gasUsed: BigInt!
+  events: [Event!] @derivedFrom(field: "transaction")
   createdAt: BigInt!
   createdAtBlock: BigInt!
 }
@@ -28,7 +30,7 @@ type TransactionStat @entity {
 type TransactionTypeStat @entity {
   # `${transaction-type}`
   id: ID!
-  type: String!
+  transactionType: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
   createdAt: BigInt!
@@ -40,7 +42,7 @@ type TransactionTypeStat @entity {
 type TransactionTypeAppStat @entity {
   # `${transaction-type}-${app-id}`
   id: ID!
-  type: String!
+  transactionType: String!
   appId: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
@@ -53,7 +55,7 @@ type TransactionTypeAppStat @entity {
 type TransactionTypeUserStat @entity {
   # `${transaction-type}-${user-id}`
   id: ID!
-  type: String!
+  transactionType: String!
   userId: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
@@ -66,7 +68,7 @@ type TransactionTypeUserStat @entity {
 type TransactionTypeUserAppStat @entity {
   # `${transaction-type}-${user-id}-${app-id}`
   id: ID!
-  type: String!
+  transactionType: String!
   userId: String!
   appId: String!
   totalCount: Int8!
@@ -108,6 +110,108 @@ type TransactionUserAppStat @entity {
   appId: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
+}
+
+type Event @entity(immutable: true) {
+  id: ID!
+  transaction: Transaction
+  timestamp: Timestamp!
+  eventType: String!
+  userId: String!
+  appId: String!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+}
+
+type EventStat @entity {
+  id: ID!
+  totalCount: Int8!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
+}
+
+type EventTypeStat @entity {
+  # `${event-type}`
+  id: ID!
+  eventType: String!
+  totalCount: Int8!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
+}
+
+type EventTypeAppStat @entity {
+  # `${event-type}-${app-id}`
+  id: ID!
+  eventType: String!
+  appId: String!
+  totalCount: Int8!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
+}
+
+type EventTypeUserStat @entity {
+  # `${event-type}-${user-id}`
+  id: ID!
+  eventType: String!
+  userId: String!
+  totalCount: Int8!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
+}
+
+type EventTypeUserAppStat @entity {
+  # `${event-type}-${user-id}-${app-id}`
+  id: ID!
+  eventType: String!
+  userId: String!
+  appId: String!
+  totalCount: Int8!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
+}
+
+type EventAppStat @entity {
+  # `${app-id}`
+  id: ID!
+  appId: String!
+  totalCount: Int8!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
+}
+
+type EventUserStat @entity {
+  # `${user-id}`
+  id: ID!
+  userId: String!
+  totalCount: Int8!
+  createdAt: BigInt!
+  createdAtBlock: BigInt!
+  updatedAt: BigInt!
+  updatedAtBlock: BigInt!
+}
+
+type EventUserAppStat @entity {
+  # `${user-id}-${app-id}`
+  id: ID!
+  userId: String!
+  appId: String!
+  totalCount: Int8!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
