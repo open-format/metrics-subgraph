@@ -15,7 +15,6 @@ export function createTransaction(event: ethereum.Event, eventType: string, appA
     const functionSelector = event.transaction.input.toHexString().slice(0, 10);
     const transactionType = getTransactionType(functionSelector)
     transaction = new Transaction(event.transaction.hash.toHex());
-    transaction.timestamp = event.block.timestamp.toI64();
     transaction.userId = user.id;
     transaction.appId = appAddress.toHex();
     transaction.gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
@@ -42,7 +41,6 @@ export function createTransaction(event: ethereum.Event, eventType: string, appA
   // Event Id: transaction_hash-eventLogIndexInTransaction
   let transactionEvent = new Event(event.transaction.hash.toHex().concat('-').concat(event.transactionLogIndex.toHex()));
   transactionEvent.transaction = transaction.id;
-  transactionEvent.timestamp = event.block.timestamp.toI64();
   transactionEvent.eventType = eventType;
   transactionEvent.userId = user.id;
   transactionEvent.appId = appAddress.toHex();

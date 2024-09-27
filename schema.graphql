@@ -6,7 +6,6 @@ type User @entity(immutable: true) {
 
 type Transaction @entity(immutable: true) {
   id: ID!
-  timestamp: Timestamp!
   transactionType: String!
   functionSelector: String!
   userId: String!
@@ -119,7 +118,6 @@ type TransactionUserAppStat @entity {
 type Event @entity(immutable: true) {
   id: ID!
   transaction: Transaction
-  timestamp: Timestamp!
   eventType: String!
   userId: String!
   appId: String!
