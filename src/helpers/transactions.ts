@@ -50,6 +50,7 @@ functionTypes.set("0x851ba287", "Get ERC721 Factory Implementation");
 functionTypes.set("0x0667aad5", "Calculate ERC721 Factory Deployment Address");
 functionTypes.set("0x08721a2c", "Calculate ERC20 Factory Deployment Address");
 functionTypes.set("0x3cb20d6c", "Get ERC20 Factory Implementation");
+functionTypes.set("0x663ff5a9", "Create App");
 export const TRANSACTION_TYPE_UNKNOWN = "Unknown";
 
 // Global stats IDs
