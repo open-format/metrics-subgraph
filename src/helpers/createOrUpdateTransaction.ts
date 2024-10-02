@@ -11,11 +11,14 @@ export function createOrUpdateTransactionStat(event: ethereum.Event): void {
         stat.createdAtBlock = event.block.number;
         stat.totalCount = 0;
         stat.totalGasUsed = BigInt.fromI32(0);
+        stat.totalGasCost = BigInt.fromI32(0);
     }
+    const gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
     stat.updatedAt = event.block.timestamp;
     stat.updatedAtBlock = event.block.number;
     stat.totalCount = stat.totalCount + 1;
-    stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
+    stat.totalGasUsed = stat.totalGasUsed.plus(gasUsed);
+    stat.totalGasCost = stat.totalGasCost.plus(event.transaction.gasPrice.times(gasUsed));
     stat.save();
 }
 
@@ -28,14 +31,16 @@ export function createOrUpdateTransactionTypeStat(event: ethereum.Event, transac
         stat.createdAtBlock = event.block.number;
         stat.totalCount = 0;
         stat.totalGasUsed = BigInt.fromI32(0);
+        stat.totalGasCost = BigInt.fromI32(0);
     }
-
+    const gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
     stat.transactionType = transactionType;
 
     stat.updatedAt = event.block.timestamp;
     stat.updatedAtBlock = event.block.number;
     stat.totalCount = stat.totalCount + 1;
-    stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
+    stat.totalGasUsed = stat.totalGasUsed.plus(gasUsed);
+    stat.totalGasCost = stat.totalGasCost.plus(event.transaction.gasPrice.times(gasUsed));
     stat.save();
 }
 
@@ -49,15 +54,17 @@ export function createOrUpdateTransactionTypeAppStat(event: ethereum.Event, tran
         stat.createdAtBlock = event.block.number;
         stat.totalCount = 0;
         stat.totalGasUsed = BigInt.fromI32(0);
+        stat.totalGasCost = BigInt.fromI32(0);
     }
-
+    const gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
     stat.transactionType = transactionType;
     stat.appId = appId;
 
     stat.updatedAt = event.block.timestamp;
     stat.updatedAtBlock = event.block.number;
     stat.totalCount = stat.totalCount + 1;
-    stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
+    stat.totalGasUsed = stat.totalGasUsed.plus(gasUsed);
+    stat.totalGasCost = stat.totalGasCost.plus(event.transaction.gasPrice.times(gasUsed));
     stat.save();
 }
 
@@ -71,15 +78,17 @@ export function createOrUpdateTransactionTypeUserStat(event: ethereum.Event, tra
         stat.createdAtBlock = event.block.number;
         stat.totalCount = 0;
         stat.totalGasUsed = BigInt.fromI32(0);
+        stat.totalGasCost = BigInt.fromI32(0);
     }
-
+    const gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
     stat.transactionType = transactionType;
     stat.userId = userId;
 
     stat.updatedAt = event.block.timestamp;
     stat.updatedAtBlock = event.block.number;
     stat.totalCount = stat.totalCount + 1;
-    stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
+    stat.totalGasUsed = stat.totalGasUsed.plus(gasUsed);
+    stat.totalGasCost = stat.totalGasCost.plus(event.transaction.gasPrice.times(gasUsed));
     stat.save();
 }
 
@@ -94,8 +103,9 @@ export function createOrUpdateTransactionTypeUserAppStat(event: ethereum.Event, 
         stat.createdAtBlock = event.block.number;
         stat.totalCount = 0;
         stat.totalGasUsed = BigInt.fromI32(0);
+        stat.totalGasCost = BigInt.fromI32(0);
     }
-
+    const gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
     stat.transactionType = transactionType;
     stat.userId = userId;
     stat.appId = appId;
@@ -103,7 +113,8 @@ export function createOrUpdateTransactionTypeUserAppStat(event: ethereum.Event, 
     stat.updatedAt = event.block.timestamp;
     stat.updatedAtBlock = event.block.number;
     stat.totalCount = stat.totalCount + 1;
-    stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
+    stat.totalGasUsed = stat.totalGasUsed.plus(gasUsed);
+    stat.totalGasCost = stat.totalGasCost.plus(event.transaction.gasPrice.times(gasUsed));
     stat.save();
 }
 
@@ -117,14 +128,16 @@ export function createOrUpdateTransactionAppStat(event: ethereum.Event, appAddre
         stat.createdAtBlock = event.block.number;
         stat.totalCount = 0;
         stat.totalGasUsed = BigInt.fromI32(0);
+        stat.totalGasCost = BigInt.fromI32(0);
     }
-
+    const gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
     stat.appId = appId;
 
     stat.updatedAt = event.block.timestamp;
     stat.updatedAtBlock = event.block.number;
     stat.totalCount = stat.totalCount + 1;
-    stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
+    stat.totalGasUsed = stat.totalGasUsed.plus(gasUsed);
+    stat.totalGasCost = stat.totalGasCost.plus(event.transaction.gasPrice.times(gasUsed));
     stat.save();
 }
 
@@ -138,14 +151,16 @@ export function createOrUpdateTransactionUserStat(event: ethereum.Event): void {
         stat.createdAtBlock = event.block.number;
         stat.totalCount = 0;
         stat.totalGasUsed = BigInt.fromI32(0);
+        stat.totalGasCost = BigInt.fromI32(0);
     }
-
+    const gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
     stat.userId = userId;
 
     stat.updatedAt = event.block.timestamp;
     stat.updatedAtBlock = event.block.number;
     stat.totalCount = stat.totalCount + 1;
-    stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
+    stat.totalGasUsed = stat.totalGasUsed.plus(gasUsed);
+    stat.totalGasCost = stat.totalGasCost.plus(event.transaction.gasPrice.times(gasUsed));
     stat.save();
 }
 
@@ -160,14 +175,16 @@ export function createOrUpdateTransactionUserAppStat(event: ethereum.Event, appA
         stat.createdAtBlock = event.block.number;
         stat.totalCount = 0;
         stat.totalGasUsed = BigInt.fromI32(0);
+        stat.totalGasCost = BigInt.fromI32(0);
     }
-
+    const gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
     stat.userId = userId;
     stat.appId = appId;
 
     stat.updatedAt = event.block.timestamp;
     stat.updatedAtBlock = event.block.number;
     stat.totalCount = stat.totalCount + 1;
-    stat.totalGasUsed = stat.totalGasUsed.plus(event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0));
+    stat.totalGasUsed = stat.totalGasUsed.plus(gasUsed);
+    stat.totalGasCost = stat.totalGasCost.plus(event.transaction.gasPrice.times(gasUsed));
     stat.save();
 }

@@ -11,6 +11,7 @@ type Transaction @entity(immutable: true) {
   userId: String!
   appId: String!
   gasUsed: BigInt!
+  gasPrice: BigInt!
   events: [Event!] @derivedFrom(field: "transaction")
   createdAt: BigInt!
   createdAtBlock: BigInt!
@@ -20,6 +21,7 @@ type TransactionStat @entity {
   id: ID!
   totalCount: Int8!
   totalGasUsed: BigInt!
+  totalGasCost: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -32,6 +34,7 @@ type TransactionTypeStat @entity {
   transactionType: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
+  totalGasCost: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -45,6 +48,7 @@ type TransactionTypeAppStat @entity {
   appId: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
+  totalGasCost: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -58,6 +62,7 @@ type TransactionTypeUserStat @entity {
   userId: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
+  totalGasCost: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -72,6 +77,7 @@ type TransactionTypeUserAppStat @entity {
   appId: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
+  totalGasCost: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -84,6 +90,7 @@ type TransactionAppStat @entity {
   appId: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
+  totalGasCost: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -96,6 +103,7 @@ type TransactionUserStat @entity {
   userId: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
+  totalGasCost: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
@@ -109,6 +117,7 @@ type TransactionUserAppStat @entity {
   appId: String!
   totalCount: Int8!
   totalGasUsed: BigInt!
+  totalGasCost: BigInt!
   createdAt: BigInt!
   createdAtBlock: BigInt!
   updatedAt: BigInt!
