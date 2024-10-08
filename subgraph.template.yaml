@@ -29,6 +29,8 @@ dataSources:
         - event: Created(address,address,string)
           handler: handleCreated
           receipt: true
+      blockHandlers:
+        - handler: handleBlock
       file: ./src/AppFactory.ts
 templates:
   - name: ERC721FactoryFacet
