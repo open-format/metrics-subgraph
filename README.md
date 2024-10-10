@@ -1,21 +1,46 @@
 # Metrics Subgraph
 
-The metrics subgraph aggregates all transactions using open format contracts into easily filterable by dimensions.
+The metrics subgraph aggregates all transactions and events from OPENFORMAT contracts into easily filterable by dimensions.
 
 ## Deployments
-| Chain                      | subgraph                                                                             |
-| -------------------------- | ------------------------------------------------------------------------------------ |
-| Arbitrum Sepolia (testnet) | https://api.studio.thegraph.com/proxy/82634/metrics-arbitrum-sepolia/version/latest/ |
+
+| Chain             | Chain                      | subgraph                                                                             |
+| ----------------- | -------------------------- | ------------------------------------------------------------------------------------ |
+|  Subgraph Studio  | Arbitrum Sepolia (testnet) | <https://api.studio.thegraph.com/proxy/82634/metrics-arbitrum-sepolia/version/latest/> |
+| Alchemy Subgraphs | Arbitrum Sepolia (testnet) | <https://subgraphs.alchemy.com/subgraphs/5834> |
+| Alchemy Subgraphs | Arbitrum Sepolia (staging) | <https://subgraphs.alchemy.com/subgraphs/7952> |
 
 ## Querying
 
-### Dimensions
+## Entities
 
-The schema uses the following pattern **TransactionDimension1Dimension2...Stat**.
-`TransactionStat` will give aggregations across open format ecosystem.
-If we want aggregation by Transaction Type, User and App we should query aggregation `TransactionTypeUserAppStat`.
+These are the main entities:
 
-```
+- Transaction: Stores information about transactions executed by OPENFORMAT contracts.
+- Event: Stores information about transaction events triggered by OPENFORMAT contracts.
+- User: Stored information about users that call functions from OPENFORMAT contracts.
+
+A many-to-one relation exists between Transaction and Events, where a Transaction has multiple events associated.
+
+All other entities are used to calculate and store statistics about Transactions and Events.
+
+### Stats Entities
+
+The stats entity names uses the following pattern **TransactionDimension1Dimension2...Stat** and **EventDimension1Dimension2...Stat**.
+`TransactionStat` and `EventStat` will give aggregations across OPENFORMAT ecosystem.
+
+Following is the list of all dimensions:
+
+- Type (Transaction type or Event type)
+- User
+- App
+
+This means if we want stats aggregated by Transaction Type, User and App we should query entity `TransactionTypeUserAppStat`.
+
+Following is a list of all Stats Entities:
+
+```text
+* Transaction related stats *
 TransactionStat
 TransactionTypeStat
 TransactionTypeAppStat
@@ -24,39 +49,47 @@ TransactionTypeUserAppStat
 TransactionAppStat
 TransactionUserStat
 TransactionUserAppStat
+
+* Event related stats *
+EventStat
+EventTypeStat
+EventTypeAppStat
+EventTypeUserStat
+EventTypeUserAppStat
+EventAppStat
+EventUserStat
+EventUserAppStat
 ```
 
-See [schema.graphql](/schema.graphql) for different properties available in each dimension
+See [schema.graphql](/schema.graphql) for different properties available in each entity.
 
 ### Totals
 
 #### Total count of apps created
 
-[Live example ->](https://api.studio.thegraph.com/proxy/82634/metrics-arbitrum-sepolia/version/latest/graphql?query=%7B%0A++transactionTypeStats%28interval%3A+hour%2C+first%3A1%2C+where%3A+%7B%0A+++type%3A%22App+Create%22%0A++%7D%29%7B%0A++++id%0A++++totalCount%0A++++transactionCount%0A++++timestamp%0A++++gasUsed%0A++++totalGasUsed%0A++%7D%0A%7D)
-
 ```graphql
 {
-  transactionTypeStats(interval: hour, first:1, where: {
-   type:"App Create"
-  }){
+  transactionTypeStats(where: { transactionType:"Create App" }){
     totalCount
   }
 }
 ```
 
 #### Total transactions
+
 ```graphql
 {
-  transactionStats(interval: hour, first:1){
+  transactionStats {
     totalCount
   }
 }
 ```
 
 #### Total transactions for a given app
+
 ```graphql
 {
-  transactionAppStats(interval: hour, first:1 , where: {
+  transactionAppStats(where: { 
     appId: "0xad2143d3944d31143cbb46a79f2b56b45754119c"
   }){
     totalCount
@@ -65,9 +98,10 @@ See [schema.graphql](/schema.graphql) for different properties available in each
 ```
 
 #### Total transactions for a given user
+
 ```graphql
 {
-  transactionUserStats(interval: hour, first:1 , where: {
+  transactionUserStats(where: {
     userId: "0xad2143d3944d31143cbb46a79f2b56b45754119c"
   }){
     totalCount
@@ -75,148 +109,171 @@ See [schema.graphql](/schema.graphql) for different properties available in each
 }
 ```
 
-#### Total transactions of type "Reward XP" for a given app
+#### Total transactions of type "Mint ERC20" for a given app
+
 ```graphql
 {
-  transactionTypeAppStats(interval: hour, first:1 , where: {
+  transactionTypeAppStats(where: {
     appId: "0xad2143d3944d31143cbb46a79f2b56b45754119c"
-    type: "Reward XP"
+    transactionType: "Mint ERC20"
   }){
     totalCount
   }
 }
 ```
-See the [list of transaction types](#transaction-types) for different options.
 
-## Time Aggregation
+#### Total count of badges created
 
-Time aggregations happen hourly or daily. By setting the `interval` to `day` or `hour`. The same logic can be applied across all dimensions.
+```graphql
+{
+  eventTypeStats(where: { eventType:"Badge Create" }){
+    totalCount
+  }
+}
+```
 
-Lets use apps created as an example
+#### Total events triggered
+
+```graphql
+{
+  eventStats {
+    totalCount
+  }
+}
+```
+
+#### Total events for a given app
+
+```graphql
+{
+  eventAppStats(where: { 
+    appId: "0xad2143d3944d31143cbb46a79f2b56b45754119c"
+  }){
+    totalCount
+  }
+}
+```
+
+#### Total events for a given user
+
+```graphql
+{
+  eventUserStats(where: {
+    userId: "0xad2143d3944d31143cbb46a79f2b56b45754119c"
+  }){
+    totalCount
+  }
+}
+```
+
+#### Total tokens created by a given app
+
+```graphql
+{
+  eventTypeAppStats(where: {
+    appId: "0xad2143d3944d31143cbb46a79f2b56b45754119c"
+    eventType: "Token Create"
+  }){
+    totalCount
+  }
+}
+
+```
+
+
+See the lists of [transaction types](#transaction-types) and [event types](#event-types) for different options.
+
+## Aggregations over time
+
+You can use subgraph [Time-travel queries](https://thegraph.com/docs/en/querying/graphql-api/#time-travel-queries) to know the values of stats entities at any point in the past. In order to do this you need to specify the block number in the query, the result will be like a snapshot of the entities at the specified point.
+
+You can also bundle several time travel queries into one query by utilizing [aliases](https://graphql.org/learn/queries/#aliases). This allows you to get as many snapshots as you need in a single query. You can use filters with aliases without problems.
 
 ### Apps created over time
-The following query will return a list of the 100 latest aggregated days where apps where created.
 
-> Note: Days where the transaction count is zero are skipped.
+The following query will return the total number of Apps created at 3 different points: currently, at block `80171125` and at block `80114208`.
 
 ```graphql
-{
-  transactionTypeStats(interval: day, first:100, where: {
-   type:"App Create"
-  }){
+{  
+  current: transactionTypeStats ( where: {transactionType:"Create App"} ) {
     totalCount
-    transactionCount
-    timestamp
+    updatedAt
+  }
+  block_80171125: transactionTypeStats (block: {number: 80171125}, where: {transactionType:"Create App"}) {
+    totalCount
+    updatedAt
+  }
+  block_80114208: transactionTypeStats (block: {number: 80114208}, where: {transactionType:"Create App"}) {
+    totalCount
+    updatedAt
   }
 }
 ```
+
 For this query the results can be understood as:
-- `totalCount`: The total number of apps created.
-- `transactionCount`: The number of apps created that day.
-- `timestamp`: UNIX time in microseconds when the stats were aggregated
 
-### Apps created between two dates
-To get specific data between dates timestamps in microseconds can be given using `timestamp_lte` (<=) and `timestamp_gte` (>=)
+- `totalCount`: The total number of apps created at that point.
+- `updatedAt`: UNIX time in milliseconds when the stats were last updated.
 
-For example:
-1720828800000000 - Saturday, 13 July 2024 00:00:00
-1719705600000000 - Sunday, 30 June 2024 00:00:00
-```graphql
-{
-  transactionTypeStats(interval: day, first:100, where: {
-   type:"App Create"
-   timestamp_lte: "1720828800000000"
-   timestamp_gte: "1719705600000000"
-  }){
-    totalCount
-    transactionCount
-  }
-}
-```
+## Gas and Cost
 
-### Apps created in the last hour
-Because the data is aggregated at most every hour, on the hour, we need to manually aggregate the most recent transactions if we want a faster frequency. To do so we can query `transactions` manually with the appropriate filters to include the latest hour
+`totalGasUsed` can be added to queries to get the total cumulative gas used. Just like `transactionCount` this works across all dimensions.
 
-For example lets use the date `Sat Jul 13 2024` and imagine the time is between 20:00 and 21:00 GMT to get all "App Create" transactions we need to add the aggregated data to the current hour.
-
-```graphql
-{
-  transactions(
-    orderBy:timestamp,
-    orderDirection: desc,
-    where: {
-     	type:"App Create",
-     	timestamp_gt: "1720900800000000",
-    	timestamp_lt: "1720904400000000",
-    }
-  ){
-    id
-    type
-    timestamp
-  }
-  transactionTypeStats(interval: hour, first:1, where: {
-   type:"App Create"
-   timestamp_lte: "1720900800000000"
-  }){
-    totalCount
-  }
-}
-```
-
-Will give us the following result:
-```JSON
-{
-  "data": {
-    "transactions": [
-      {
-        "id": "273273466076004352",
-        "type": "App Create",
-        "timestamp": "1720903142000000"
-      }
-    ],
-    "transactionTypeStats": [
-      {
-        "totalCount": "379",
-        "transactionCount": "1"
-      }
-    ]
-  }
-}
-```
-We then can add `data.transactions.length` to `data.transactionTypeStats[0].totalCount` to get the most up to date count.
-
-## Gas
-
-`gasUsed` can be added to queries to get total gas used in wei within that aggregation interval. `totalGasUsed` will give you the total cumulative gas used. Just like `count` and `transactionCount` this works across all dimensions.
+`totalGasCost` stores the cumulative gas costs. Gas costs of a transaction is defined as the gas used by the transaction multiplied by the transaction gas price. Similarly is works across all dimensions.
 
 For example if we use the total apps created query
+
 - `totalCount`: The total number of apps created
 - `totalGasUsed` : The total gas used creating apps
-- `gasUsed`: The total gas used within the latest aggregated hour
-```
+- `totalGasCost` : The total cost creating apps
+
+```graphql
 {
-  transactionTypeStats(interval: hour, first:1, where: {
-   type:"App Create"
+  transactionTypeStats(where: {
+   transactionType:"Create App"
   }){
     totalCount
-    gasUsed
     totalGasUsed
+    totalGasCost
   }
 }
 ```
 
 ## Transaction Types
+
+Transaction types are defined according to the contract function called in the transaction.
+
+```javascript
+"Batch Mint Badge"
+"Mint Badge"
+"Mint ERC20"
+"Mint ERC721"
+"Multicall"
+"Transfer ERC20"
+"Transfer ERC721"
+"Create ERC20"
+"Create ERC721"
+"Create ERC721 Token Uri"
+"Get ERC721 Factory Implementation"
+"Calculate ERC721 Factory Deployment Address"
+"Calculate ERC20 Factory Deployment Address"
+"Get ERC20 Factory Implementation"
+"Create App"
 ```
+
+## Event Types
+
+```javascript
 // ERC721 Badge
-"ERC721Badge Minted"
-"ERC721Badge Batch Minted"
+"ERC721Badge Mint"
+"ERC721Badge Batch Mint"
 "ERC721Badge Transfer"
 "ERC721Badge Burn"
 "ERC721Badge Update"
 
 // ERC721 Base
-"ERC721 Minted"
-"ERC721 Batch Minted"
+"ERC721 Mint"
+"ERC721 Batch Mint"
 "ERC721 Transfer"
 "ERC721 Burn"
 
@@ -228,18 +285,20 @@ For example if we use the total apps created query
 "ERC721Lazy Burn"
 
 // Credits
-"ERC20 Create"
 "ERC20 Mint"
 "ERC20 Burn"
 "ERC20 Transfer"
 "ERC20 Update"
 
-// Rewarding
-"Reward XP"
-"Transfer Token"
+// Rewarding XP
+"Token Create"
+"Token Reward"
+"Token Transfer"
+
+// Rewarding Badges
 "Badge Create"
-"Reward Badge"
-"Transfer Badge"
+"Badge Reward"
+"Badge Transfer"
 
 // App Factory
 "App Create"
