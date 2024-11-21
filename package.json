@@ -1,6 +1,6 @@
 {
   "name": "@openformat/metrics-subgraph",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "scripts": {
     "reinstall": "rm -rf .pnp* && yarn",
     "clean": "rm -rf build/ generated/",
@@ -10,9 +10,15 @@
     "deploy:local": "graph deploy open-format/local --ipfs http://0.0.0.0:5001 --node http://0.0.0.0:8020 subgraph.local.yaml",
     "prepare:arbitrum-sepolia": "mustache networks/arbitrum-sepolia.json subgraph.template.yaml subgraph.arbitrum-sepolia.yaml",
     "prepare:arbitrum-sepolia-staging": "mustache networks/arbitrum-sepolia-staging.json subgraph.template.yaml subgraph.arbitrum-sepolia-staging.yaml",
+    "prepare:aurora": "mustache networks/aurora.json subgraph.template.yaml subgraph.aurora.yaml",
+    "prepare:aurora-testnet": "mustache networks/aurora-testnet.json subgraph.template.yaml subgraph.aurora-testnet.yaml",
     "gen:arbitrum-sepolia": "graph codegen subgraph.arbitrum-sepolia.yaml",
     "gen:arbitrum-sepolia-staging": "graph codegen subgraph.arbitrum-sepolia-staging.yaml",
+    "gen:aurora": "graph codegen subgraph.aurora.yaml",
+    "gen:aurora-testnet": "graph codegen subgraph.aurora-testnet.yaml",
     "deploy:arbitrum-sepolia": "graph deploy --studio metrics-arbitrum-sepolia subgraph.arbitrum-sepolia.yaml",
+    "deploy:aurora": "graph deploy --studio open-format-metrics-aurora subgraph.aurora.yaml",
+    "deploy:aurora-testnet": "graph deploy --studio open-format-metrics-aurora-testnet subgraph.aurora-testnet.yaml",
     "deploy-alchemy:arbitrum-sepolia": "dotenv cross-var -- graph deploy open-format-metrics-arbitrum-sepolia --version-label %ALCHEMY_SUBGRAPH_VERSION_ARBITRUM_SEPOLIA% --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key %ALCHEMY_DEPLOY_KEY% --ipfs https://ipfs.satsuma.xyz subgraph.arbitrum-sepolia.yaml",
     "deploy-alchemy:arbitrum-sepolia-staging": "dotenv cross-var -- graph deploy open-format-metrics-arbitrum-sepolia-staging --version-label %ALCHEMY_SUBGRAPH_VERSION_ARBITRUM_SEPOLIA_STAGING% --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key %ALCHEMY_DEPLOY_KEY% --ipfs https://ipfs.satsuma.xyz subgraph.arbitrum-sepolia-staging.yaml",
     "build": "graph build",
