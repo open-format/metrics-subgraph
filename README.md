@@ -6,8 +6,10 @@ The metrics subgraph aggregates all transactions and events from OPENFORMAT cont
 
 | Provider | Chain | Endpoint |
 | --- | --- | --- |
-| Subgraph Studio | Aurora testnet | <https://api.studio.thegraph.com/query/82634/open-format-metrics-aurora-testnet/version/latest> |
-|  Subgraph Studio  | Aurora | <https://api.studio.thegraph.com/query/82634/open-format-metrics-aurora/version/latest> |
+| Subgraph Studio | Aurora testnet | <https://api.studio.thegraph.com/query/82634/open-format-metrics-aurora-testnet/v0.0.10> |
+|  Subgraph Studio  | Aurora | <https://api.studio.thegraph.com/query/82634/open-format-metrics-aurora/v0.0.10> |
+| Subgraph Studio | Base Sepolia (testnet) | <https://api.studio.thegraph.com/query/82634/open-format-metrics-base-sepolia/v0.0.10> |
+|  Subgraph Studio  | Base | <https://api.studio.thegraph.com/query/82634/open-format-metrics-base/v0.0.10> |
 | Alchemy Subgraphs | Arbitrum Sepolia (testnet) | <https://subgraphs.alchemy.com/subgraphs/5834> |
 | Alchemy Subgraphs | Arbitrum Sepolia (staging) | <https://subgraphs.alchemy.com/subgraphs/7952> |
 
