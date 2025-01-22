@@ -12,6 +12,7 @@ The metrics subgraph aggregates all transactions and events from OPENFORMAT cont
 |  Subgraph Studio  | Base | <https://api.studio.thegraph.com/query/82634/open-format-metrics-base/v0.0.10> |
 | Alchemy Subgraphs | Arbitrum Sepolia (testnet) | <https://subgraphs.alchemy.com/subgraphs/5834> |
 | Alchemy Subgraphs | Arbitrum Sepolia (staging) | <https://subgraphs.alchemy.com/subgraphs/7952> |
+| Mobula Subgraphs | Matchain | <https://subgraph.mobula.io/subgraphs/name/open-format-matchain-metrics-v0_0_10> |
 
 ## Querying
 
