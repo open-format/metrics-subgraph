@@ -1,5 +1,6 @@
 {
   "network": "aurora",
+  "specVersion": "1.1.0",
   "AppFactory": {
     "address": "0x2eBF7f4572c218217ca01CE2883E3EfF93626a8E",
     "startBlock": 131490511
