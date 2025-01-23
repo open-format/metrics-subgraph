@@ -1,5 +1,6 @@
 {
   "network": "arbitrum-sepolia",
+  "specVersion": "1.1.0",
   "AppFactory": {
     "startBlock": 32647240,
     "address": "0x19781Af95cA4E113D5D1412452225D11A84ce992"
