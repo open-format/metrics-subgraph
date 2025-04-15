@@ -4,6 +4,13 @@ type User @entity(immutable: true) {
   createdAtBlock: BigInt!
 }
 
+type Timestamp @entity(immutable: true) {
+  # timestamp on the hour in UTC seconds
+  id: ID!
+  # the first block number of that hour
+  blockNumber: BigInt!
+}
+
 type Transaction @entity(immutable: true) {
   id: ID!
   transactionType: String!
